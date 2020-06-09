@@ -1,0 +1,15 @@
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<script>
+    const makeRequest = $.ajax({
+        method: "POST",
+        url: "http://localhost:3000/ajax",
+        dataType: "json",
+        data: {
+            firstname: "Vivian"
+        }
+    });
+    makeRequest.then((response) => {
+        console.log(response);
+    });
+</script>
