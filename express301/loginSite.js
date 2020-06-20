@@ -15,8 +15,20 @@ app.use(express.urlencoded({ extended: false }));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'template'));
 
+app.use((req, res, next)=> {
+    if(req.query.msg == 'fail') {
+        res.locals.msg = "Sorry the Username and Password is Incorrect";
+    }else {
+        res.locals.msg = '';
+    }
+
+    next();
+});
 
 app.get('/login',(req , res , next)=> {
+    // The req object has the query property in Express
+    // req.query can fetch all the keys in the query string
+    //console.log(req.query);
     res.render('login');
 
 });
@@ -39,7 +51,10 @@ app.post('/process_login', (req, res, next)=>{
         // - It Destination route address
         res.redirect('/welcome');
     } else {
-        res.redirect('/login?fail');
+        // The "?" is s special character in the url which indicates the start of the query string
+        // The "&" is a special character that is used to pass multiple query string.   
+        // The Query String is the place where we put the insecure data.
+        res.redirect('/login?msg=fail&test=hello');
     }
 });
 
